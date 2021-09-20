@@ -15,11 +15,16 @@ import urllib.request
 class Display:
     """Display interface for sending output to the console."""
     CLEAR = '\033[0m'
+    RED = '\033[31m'
     GREEN = '\033[32m'
 
     def section(self, message: str) -> None:
         """Print a section message to the console."""
         self.info(f'==> {message}', color=self.GREEN)
+
+    def error(self, message: str) -> None:
+        """Print an error message to the console."""
+        self.info(message, color=self.RED)
 
     def info(self, message: str, color: t.Optional[str] = None) -> None:
         """Print a message to the console."""
