@@ -1,4 +1,4 @@
-FROM quay.io/bedrock/ubuntu:bionic-20201119
+FROM quay.io/bedrock/ubuntu:focal-20210921
 
 # increment the number in this file to force a full container rebuild
 COPY files/update.txt /dev/null
@@ -26,15 +26,12 @@ RUN apt-get update -y && \
     openssh-server \
     openssl \
     python2.7-dev \
-    python3.6-dev \
-    python3.6-distutils \
-    python3.6-venv \
-    python3.7-dev \
-    python3.7-distutils \
-    python3.7-venv \
     python3.8-dev \
     python3.8-distutils \
     python3.8-venv \
+    python3.9-dev \
+    python3.9-distutils \
+    python3.9-venv \
     shellcheck \
     systemd-sysv \
     && \
@@ -50,12 +47,13 @@ COPY files/deadsnakes.list /etc/apt/sources.list.d/deadsnakes.list
 # This is done separately to avoid conflicts with official Ubuntu packages.
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    python2.6-dev \
     python3.5-dev \
     python3.5-venv \
-    python3.9-dev \
-    python3.9-distutils \
-    python3.9-venv \
+    python3.6-dev \
+    python3.6-venv \
+    python3.7-dev \
+    python3.7-distutils \
+    python3.7-venv \
     python3.10-dev \
     python3.10-distutils \
     python3.10-venv \
@@ -69,7 +67,7 @@ RUN rm /etc/apt/apt.conf.d/docker-clean && \
 
 # Install pwsh, and other PS/.NET sanity test tools.
 RUN apt-get update -y && \
-    curl --silent --location https://github.com/PowerShell/PowerShell/releases/download/v7.0.1/powershell_7.0.1-1.ubuntu.18.04_amd64.deb -o /tmp/pwsh.deb && \
+    curl --silent --location https://github.com/PowerShell/PowerShell/releases/download/v7.1.4/powershell_7.1.4-1.ubuntu.20.04_amd64.deb -o /tmp/pwsh.deb && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends /tmp/pwsh.deb && \
     rm /tmp/pwsh.deb && \

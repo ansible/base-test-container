@@ -44,6 +44,9 @@ class Python:
 
 class Pip:
     """Python interace for the pip CLI."""
+    PIP_INDEX = 'https://d2c8fqinjk13kw.cloudfront.net/simple/'
+    PIP_PROXY_VERSIONS: t.Tuple[str] = tuple()
+
     _OPTIONS = (
         '--disable-pip-version-check',
         '--no-cache-dir',
@@ -56,12 +59,6 @@ class Pip:
     )
 
     _PACKAGES = {
-        '2.6': dict(
-            pip='9.0.3',
-            argparse='1.4.0',
-            setuptools='36.8.0',
-            wheel='0.29.0',
-        ),
         '2.7': dict(
             pip='20.3.4',
             setuptools='44.1.1',
@@ -127,14 +124,13 @@ class Pip:
     @contextlib.contextmanager
     def _install_options_context(self) -> t.List[str]:
         """Create a pip install context for the specified Python interpreter and return options needed for the install."""
-        pip_index = 'https://d2c8fqinjk13kw.cloudfront.net/simple/'
         distutils_cfg_path = os.path.expanduser('~/.pydistutils.cfg')
-        distutils_cfg = f'[easy_install]\nindex_url = {pip_index}'
+        distutils_cfg = f'[easy_install]\nindex_url = {self.PIP_INDEX}'
 
         options = []
 
-        if self.python.version == '2.6':
-            options.extend(['--index', pip_index])
+        if self.python.version in self.PIP_PROXY_VERSIONS:
+            options.extend(['--index', self.PIP_INDEX])
 
             with open(distutils_cfg_path, 'w') as distutils_cfg_file:
                 distutils_cfg_file.write(distutils_cfg)
@@ -142,7 +138,7 @@ class Pip:
         try:
             yield options
         finally:
-            if self.python.version == '2.6':
+            if self.python.version in self.PIP_PROXY_VERSIONS:
                 os.unlink(distutils_cfg_path)
 
 
