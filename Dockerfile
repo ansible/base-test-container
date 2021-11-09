@@ -67,7 +67,7 @@ RUN rm /etc/apt/apt.conf.d/docker-clean && \
 
 # Install pwsh, and other PS/.NET sanity test tools.
 RUN apt-get update -y && \
-    curl --silent --location https://github.com/PowerShell/PowerShell/releases/download/v7.1.4/powershell_7.1.4-1.ubuntu.20.04_amd64.deb -o /tmp/pwsh.deb && \
+    curl --silent --location https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/powershell_7.2.0-1.deb_amd64.deb -o /tmp/pwsh.deb && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends /tmp/pwsh.deb && \
     rm /tmp/pwsh.deb && \
