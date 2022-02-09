@@ -1,4 +1,4 @@
-FROM quay.io/bedrock/ubuntu:focal-20210921
+FROM quay.io/bedrock/ubuntu:focal-20220113
 
 # increment the number in this file to force a full container rebuild
 COPY files/update.txt /dev/null
