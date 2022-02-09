@@ -53,20 +53,25 @@ class Pip:
     )
 
     _DEFAULT_PACKAGES = dict(
-        pip='21.0.1',
-        setuptools='58.0.4',
-        wheel='0.37.0',
+        pip='21.3.1',
+        setuptools='60.8.2',
+        wheel='0.37.1',
     )
 
     _PACKAGES = {
         '2.7': dict(
-            pip='20.3.4',
-            setuptools='44.1.1',
+            pip='20.3.4',  # 21.0 requires Python 3.6+
+            setuptools='44.1.1',  # 45.0.0 requires Python 3.5+
             wheel=None,
         ),
         '3.5': dict(
-            pip='20.3.4',
-            setuptools='44.1.1',
+            pip='20.3.4',  # 21.0 requires Python 3.6+
+            setuptools='50.3.2',  # 51.0.0 requires Python 3.6+
+            wheel=None,
+        ),
+        '3.6': dict(
+            pip='21.3.1',  # 22.0 requires Python 3.7+
+            setuptools='59.6.0',  # 59.7.0 requires Python 3.7+
             wheel=None,
         ),
     }
