@@ -43,7 +43,7 @@ class Python:
 
 
 class Pip:
-    """Python interace for the pip CLI."""
+    """Python interface for the pip CLI."""
     PIP_INDEX = 'https://d2c8fqinjk13kw.cloudfront.net/simple/'
     PIP_PROXY_VERSIONS: t.Tuple[str] = tuple()
 
@@ -123,7 +123,7 @@ class Pip:
 
     @contextlib.contextmanager
     def _install_options_context(self) -> t.List[str]:
-        """Create a pip install context for the specified Python interpreter and return options needed for the install."""
+        """Create a pip install context for the specified Python interpreter and return options needed for the installation."""
         distutils_cfg_path = os.path.expanduser('~/.pydistutils.cfg')
         distutils_cfg = f'[easy_install]\nindex_url = {self.PIP_INDEX}'
 
