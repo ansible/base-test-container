@@ -57,6 +57,9 @@ RUN apt-get update -y && \
     python3.10-dev \
     python3.10-distutils \
     python3.10-venv \
+    python3.11-dev \
+    python3.11-distutils \
+    python3.11-venv \
     && \
     apt-get clean
 
