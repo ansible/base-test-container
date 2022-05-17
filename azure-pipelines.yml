@@ -47,8 +47,8 @@ stages:
               CONTAINMINT_PASSWORD: $(CONTAINMINT_PASSWORD)
         strategy:
           matrix:
-            x86_64:
-            aarch64:
+            x86_64: {}
+            aarch64: {}
 
   - stage: Deploy
     dependsOn: Build
