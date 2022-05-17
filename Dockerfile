@@ -68,13 +68,20 @@ RUN rm /etc/apt/apt.conf.d/docker-clean && \
     ln -s python3   /usr/bin/python && \
     locale-gen en_US.UTF-8
 
-# Install pwsh, and other PS/.NET sanity test tools.
-RUN apt-get update -y && \
-    curl --silent --location https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/powershell_7.2.0-1.deb_amd64.deb -o /tmp/pwsh.deb && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y --no-install-recommends /tmp/pwsh.deb && \
-    rm /tmp/pwsh.deb && \
-    apt-get clean && \
+# Install PowerShell using a binary archive.
+# This allows pinning to a specific version, and also brings support for multiple architectures.
+RUN arch="$(uname -i)" && \
+    arch=$(if [ "${arch}" = "x86_64" ]; then echo "x64"; \
+         elif [ "${arch}" = "aarch64" ]; then echo "arm64"; \
+         else echo "unknown arch: ${arch}" && exit 1; fi) && \
+    url="https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-linux-${arch}.tar.gz" && \
+    echo "URL: ${url}" && \
+    curl -sL "${url}" > /tmp/powershell.tgz && \
+    mkdir -p /opt/microsoft/powershell/7 && \
+    tar zxf /tmp/powershell.tgz -C /opt/microsoft/powershell/7 && \
+    rm /tmp/powershell.tgz && \
+    chmod +x /opt/microsoft/powershell/7/pwsh && \
+    ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh && \
     pwsh --version
 
 ENV container=docker
