@@ -67,7 +67,6 @@ stages:
           - script: >
               containmint merge
               --push
-              --tag "$(container_name):latest"
               --tag "$(container_name):$(Build.SourceBranchName)"
               "$(scratchpad_tag)-x86_64"
               "$(scratchpad_tag)-aarch64"
