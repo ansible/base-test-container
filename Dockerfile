@@ -74,7 +74,7 @@ RUN arch="$(uname -i)" && \
     arch=$(if [ "${arch}" = "x86_64" ]; then echo "x64"; \
          elif [ "${arch}" = "aarch64" ]; then echo "arm64"; \
          else echo "unknown arch: ${arch}" && exit 1; fi) && \
-    url="https://github.com/PowerShell/PowerShell/releases/download/v7.2.3/powershell-7.2.3-linux-${arch}.tar.gz" && \
+    url="https://github.com/PowerShell/PowerShell/releases/download/v7.2.4/powershell-7.2.4-linux-${arch}.tar.gz" && \
     echo "URL: ${url}" && \
     curl -sL "${url}" > /tmp/powershell.tgz && \
     mkdir -p /opt/microsoft/powershell/7 && \
