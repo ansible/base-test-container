@@ -38,9 +38,7 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# podman build fails with 'apt-key adv ...' but this works for both
-RUN curl -sL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF23C5A6CF475977595C89F51BA6932366A755776" | apt-key add
-
+COPY files/deadsnakes.gpg /etc/apt/keyrings/deadsnakes.gpg
 COPY files/deadsnakes.list /etc/apt/sources.list.d/deadsnakes.list
 
 # Install Python versions available from the deadsnakes PPA.
