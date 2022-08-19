@@ -1,6 +1,8 @@
 """Find installed Python interpreters and install pip in each one."""
 from __future__ import annotations
 
+import pathlib
+
 from installer import (
     Pip,
     Python,
@@ -11,8 +13,17 @@ from installer import (
 
 def main() -> None:
     """Main entry point."""
+    tmp = pathlib.Path('/tmp')
+
+    if unexpected := list(tmp.iterdir()):
+        raise Exception(f'Unexpected temporary files: {unexpected}')
+
     for python in iterate_pythons():
         setup_python(python)
+
+    for path in tmp.iterdir():
+        display.info(f'Removing temporary file: {path}')
+        path.unlink()
 
 
 def setup_python(python: Python) -> None:
