@@ -61,7 +61,8 @@ RUN apt-get update -y && \
     python3.11-distutils \
     python3.11-venv \
     && \
-    apt-get clean
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN rm /etc/apt/apt.conf.d/docker-clean && \
     ln -s python2.7 /usr/bin/python2 && \
