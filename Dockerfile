@@ -85,7 +85,7 @@ CMD ["/sbin/init"]
 
 # Install pip last to speed up local container rebuilds.
 COPY files/*.py /usr/share/container-setup/
-RUN python3.10 /usr/share/container-setup/setup.py
+RUN python3.10 -B /usr/share/container-setup/setup.py
 
 # Make sure the pip entry points in /usr/bin are correct.
 RUN rm -f /usr/bin/pip2 && cp -av /usr/local/bin/pip2 /usr/bin/pip2 && /usr/bin/pip2 -V && \

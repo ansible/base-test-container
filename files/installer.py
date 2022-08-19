@@ -83,7 +83,7 @@ class Pip:
 
         directory = os.path.dirname(os.path.abspath(__file__))
 
-        self._pip_command = [python.path, os.path.join(directory, 'quiet_pip.py')]
+        self._pip_command = [python.path, '-B', os.path.join(directory, 'quiet_pip.py')]
         self._get_pip_path = f'/tmp/get_pip_{self.version.replace(".", "_")}.py'
 
     def have_get_pip(self) -> bool:
