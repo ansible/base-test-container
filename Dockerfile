@@ -1,8 +1,5 @@
 FROM quay.io/bedrock/ubuntu:focal-20220801
 
-# increment the number in this file to force a full container rebuild
-COPY files/update.txt /dev/null
-
 VOLUME /sys/fs/cgroup /run/lock /run /tmp
 
 RUN apt-get update -y && \
@@ -38,9 +35,7 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# podman build fails with 'apt-key adv ...' but this works for both
-RUN curl -sL "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF23C5A6CF475977595C89F51BA6932366A755776" | apt-key add
-
+COPY files/deadsnakes.gpg /etc/apt/keyrings/deadsnakes.gpg
 COPY files/deadsnakes.list /etc/apt/sources.list.d/deadsnakes.list
 
 # Install Python versions available from the deadsnakes PPA.
@@ -61,7 +56,8 @@ RUN apt-get update -y && \
     python3.11-distutils \
     python3.11-venv \
     && \
-    apt-get clean
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN rm /etc/apt/apt.conf.d/docker-clean && \
     ln -s python2.7 /usr/bin/python2 && \
@@ -89,7 +85,7 @@ CMD ["/sbin/init"]
 
 # Install pip last to speed up local container rebuilds.
 COPY files/*.py /usr/share/container-setup/
-RUN python3.10 /usr/share/container-setup/setup.py && rm /usr/share/container-setup/setup.py
+RUN python3.10 -B /usr/share/container-setup/setup.py
 
 # Make sure the pip entry points in /usr/bin are correct.
 RUN rm -f /usr/bin/pip2 && cp -av /usr/local/bin/pip2 /usr/bin/pip2 && /usr/bin/pip2 -V && \
