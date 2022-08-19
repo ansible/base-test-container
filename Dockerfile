@@ -1,8 +1,5 @@
 FROM quay.io/bedrock/ubuntu:focal-20220801
 
-# increment the number in this file to force a full container rebuild
-COPY files/update.txt /dev/null
-
 VOLUME /sys/fs/cgroup /run/lock /run /tmp
 
 RUN apt-get update -y && \
