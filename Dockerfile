@@ -1,7 +1,5 @@
 FROM quay.io/bedrock/ubuntu:focal-20220801
 
-VOLUME /sys/fs/cgroup /run/lock /run /tmp
-
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ca-certificates \
