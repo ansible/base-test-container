@@ -53,8 +53,8 @@ class Pip:
     )
 
     _DEFAULT_PACKAGES = dict(
-        pip='21.3.1',
-        setuptools='60.8.2',
+        pip='23.1.2',
+        setuptools='67.7.2',
         wheel='0.37.1',
     )
 

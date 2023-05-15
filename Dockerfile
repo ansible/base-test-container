@@ -53,6 +53,9 @@ RUN apt-get update -y && \
     python3.11-dev \
     python3.11-distutils \
     python3.11-venv \
+    python3.12-dev \
+    python3.12-distutils \
+    python3.12-venv \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -88,7 +91,7 @@ CMD ["/sbin/init"]
 
 # Install pip last to speed up local container rebuilds.
 COPY files/*.py /usr/share/container-setup/
-RUN ln -s /usr/bin/python3.11 /usr/share/container-setup/python
+RUN ln -s /usr/bin/python3.12 /usr/share/container-setup/python
 RUN /usr/share/container-setup/python -B /usr/share/container-setup/setup.py
 
 # Make sure the pip entry points in /usr/bin are correct.
