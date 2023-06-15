@@ -28,6 +28,7 @@ RUN apt-get update -y && \
     python3.9-distutils \
     python3.9-venv \
     shellcheck \
+    sudo \
     systemd-sysv \
     && \
     apt-get clean && \
