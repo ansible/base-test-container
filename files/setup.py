@@ -56,6 +56,8 @@ def setup_python(python: Python) -> None:
 
     display.section(f'Completed setup of Python {python.version}')
 
+    pip.purge_cache()
+
 
 if __name__ == '__main__':
     main()

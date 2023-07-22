@@ -5,9 +5,11 @@ import contextlib
 import dataclasses
 import json
 import os
+import pathlib
 import re
 import shutil
 import subprocess
+import tempfile
 import typing as t
 import urllib.request
 
@@ -49,7 +51,6 @@ class Pip:
 
     _OPTIONS = (
         '--disable-pip-version-check',
-        '--no-cache-dir',
     )
 
     _DEFAULT_PACKAGES = dict(
@@ -105,6 +106,15 @@ class Pip:
         """Show the pip version."""
         subprocess.run(self._pip_command + ['--version'] + list(self._OPTIONS), check=True)
 
+    def wheel(self, args: t.List[str], constraints: pathlib.Path) -> None:
+        """Build Python wheels with the given constraints file, storing them in the pip cache."""
+        env = os.environ.copy()
+        env.update(PIP_CONSTRAINT=str(constraints))
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with self._install_options_context() as options:
+                subprocess.run(self._pip_command + ['wheel'] + options + list(self._OPTIONS) + args, check=True, env=env, cwd=temp_dir)
+
     def install(self, args: t.List[str]) -> None:
         """Install Python packages."""
         with self._install_options_context() as options:
@@ -120,6 +130,11 @@ class Pip:
     def check(self) -> None:
         """Check installed Python packages."""
         subprocess.run(self._pip_command + ['check'] + list(self._OPTIONS), check=True)
+
+    @staticmethod
+    def purge_cache() -> None:
+        """Purge the pip cache."""
+        shutil.rmtree(os.path.expanduser('~/.cache/pip'))  # The `pip cache purge` command leaves behind directories.
 
     @contextlib.contextmanager
     def _install_options_context(self) -> t.List[str]:
