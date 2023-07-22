@@ -134,7 +134,10 @@ class Pip:
     @staticmethod
     def purge_cache() -> None:
         """Purge the pip cache."""
-        shutil.rmtree(os.path.expanduser('~/.cache/pip'))  # The `pip cache purge` command leaves behind directories.
+        cache_dir = pathlib.Path('~/.cache/pip').expanduser()
+
+        if cache_dir.exists():
+            shutil.rmtree(cache_dir)  # The `pip cache purge` command leaves behind directories.
 
     @contextlib.contextmanager
     def _install_options_context(self) -> t.List[str]:
