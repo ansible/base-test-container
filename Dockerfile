@@ -66,7 +66,7 @@ RUN rm /etc/apt/apt.conf.d/docker-clean && \
 
 # Install PowerShell using a binary archive.
 # This allows pinning to a specific version, and also brings support for multiple architectures.
-RUN version="7.3.6" && \
+RUN version="7.4.0-preview.5" && \
     major_version="$(echo ${version} | cut -f 1 -d .)" && \
     install_dir="/opt/microsoft/powershell/${major_version}" && \
     tmp_file="/tmp/powershell.tgz" && \
@@ -83,7 +83,8 @@ RUN version="7.3.6" && \
     find "${install_dir}" -type f -exec chmod -x "{}" ";" && \
     chmod +x "${install_dir}/pwsh" && \
     ln -s "${install_dir}/pwsh" /usr/bin/pwsh && \
-    pwsh --version
+    pwsh --version && \
+    rm -rf /tmp/.dotnet
 
 ENV container=docker
 CMD ["/sbin/init"]
