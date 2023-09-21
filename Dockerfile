@@ -83,8 +83,7 @@ RUN version="7.3.7" && \
     find "${install_dir}" -type f -exec chmod -x "{}" ";" && \
     chmod +x "${install_dir}/pwsh" && \
     ln -s "${install_dir}/pwsh" /usr/bin/pwsh && \
-    pwsh --version && \
-    rm -rf /tmp/.dotnet
+    pwsh --version
 
 ENV container=docker
 CMD ["/sbin/init"]
