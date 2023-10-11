@@ -20,7 +20,6 @@ RUN apt-get update -y && \
     openssh-client \
     openssh-server \
     openssl \
-    python2.7-dev \
     python3.8-dev \
     python3.8-distutils \
     python3.8-venv \
@@ -41,8 +40,6 @@ COPY files/deadsnakes.list /etc/apt/sources.list.d/deadsnakes.list
 # This is done separately to avoid conflicts with official Ubuntu packages.
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    python3.6-dev \
-    python3.6-venv \
     python3.7-dev \
     python3.7-distutils \
     python3.7-venv \
@@ -60,8 +57,7 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 RUN rm /etc/apt/apt.conf.d/docker-clean && \
-    ln -s python2.7 /usr/bin/python2 && \
-    ln -s python3   /usr/bin/python && \
+    ln -s python3 /usr/bin/python && \
     locale-gen en_US.UTF-8
 
 # Install PowerShell using a binary archive.
@@ -94,6 +90,5 @@ RUN ln -s /usr/bin/python3.12 /usr/share/container-setup/python
 RUN /usr/share/container-setup/python -B /usr/share/container-setup/setup.py
 
 # Make sure the pip entry points in /usr/bin are correct.
-RUN rm -f /usr/bin/pip2 && cp -av /usr/local/bin/pip2 /usr/bin/pip2 && /usr/bin/pip2 -V && \
-    rm -f /usr/bin/pip3 && cp -av /usr/local/bin/pip3 /usr/bin/pip3 && /usr/bin/pip3 -V && \
+RUN rm -f /usr/bin/pip3 && cp -av /usr/local/bin/pip3 /usr/bin/pip3 && /usr/bin/pip3 -V && \
     rm -f /usr/bin/pip  && cp -av /usr/local/bin/pip  /usr/bin/pip  && /usr/bin/pip  -V
