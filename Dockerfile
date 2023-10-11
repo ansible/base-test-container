@@ -1,4 +1,4 @@
-FROM quay.io/bedrock/ubuntu:focal-20230308
+FROM quay.io/bedrock/ubuntu:focal-20230801
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -66,7 +66,7 @@ RUN rm /etc/apt/apt.conf.d/docker-clean && \
 
 # Install PowerShell using a binary archive.
 # This allows pinning to a specific version, and also brings support for multiple architectures.
-RUN version="7.3.7" && \
+RUN version="7.3.8" && \
     major_version="$(echo ${version} | cut -f 1 -d .)" && \
     install_dir="/opt/microsoft/powershell/${major_version}" && \
     tmp_file="/tmp/powershell.tgz" && \
@@ -90,7 +90,7 @@ CMD ["/sbin/init"]
 
 # Install pip last to speed up local container rebuilds.
 COPY files/*.py /usr/share/container-setup/
-RUN ln -s /usr/bin/python3.11 /usr/share/container-setup/python
+RUN ln -s /usr/bin/python3.12 /usr/share/container-setup/python
 RUN /usr/share/container-setup/python -B /usr/share/container-setup/setup.py
 
 # Make sure the pip entry points in /usr/bin are correct.
