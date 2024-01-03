@@ -1,4 +1,8 @@
-FROM quay.io/bedrock/ubuntu:focal-20230801
+FROM quay.io/bedrock/ubuntu:jammy-20231211.1
+
+# Prevent automatic apt cache cleanup, as caching is desired when running integration tests.
+# Instead, when installing packages during container builds, explicit cache cleanup is required.
+RUN rm /etc/apt/apt.conf.d/docker-clean
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -20,12 +24,11 @@ RUN apt-get update -y && \
     openssh-client \
     openssh-server \
     openssl \
-    python3.8-dev \
-    python3.8-distutils \
-    python3.8-venv \
-    python3.9-dev \
-    python3.9-distutils \
-    python3.9-venv \
+    python-is-python3 \
+    python3.10-dev \
+    python3.10-venv \
+    python3.11-dev \
+    python3.11-venv \
     shellcheck \
     sudo \
     systemd-sysv \
@@ -33,6 +36,10 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Perform locale generation now that the locales package is installed.
+RUN locale-gen en_US.UTF-8
+
+# Enable the deadsnakes PPA to provide additional packages.
 COPY files/deadsnakes.gpg /etc/apt/keyrings/deadsnakes.gpg
 COPY files/deadsnakes.list /etc/apt/sources.list.d/deadsnakes.list
 
@@ -41,28 +48,20 @@ COPY files/deadsnakes.list /etc/apt/sources.list.d/deadsnakes.list
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     python3.7-dev \
-    python3.7-distutils \
     python3.7-venv \
-    python3.10-dev \
-    python3.10-distutils \
-    python3.10-venv \
-    python3.11-dev \
-    python3.11-distutils \
-    python3.11-venv \
+    python3.8-dev \
+    python3.8-venv \
+    python3.9-dev \
+    python3.9-venv \
     python3.12-dev \
-    python3.12-distutils \
     python3.12-venv \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN rm /etc/apt/apt.conf.d/docker-clean && \
-    ln -s python3 /usr/bin/python && \
-    locale-gen en_US.UTF-8
-
 # Install PowerShell using a binary archive.
 # This allows pinning to a specific version, and also brings support for multiple architectures.
-RUN version="7.3.8" && \
+RUN version="7.4.0" && \
     major_version="$(echo ${version} | cut -f 1 -d .)" && \
     install_dir="/opt/microsoft/powershell/${major_version}" && \
     tmp_file="/tmp/powershell.tgz" && \
@@ -88,7 +87,3 @@ CMD ["/sbin/init"]
 COPY files/*.py /usr/share/container-setup/
 RUN ln -s /usr/bin/python3.12 /usr/share/container-setup/python
 RUN /usr/share/container-setup/python -B /usr/share/container-setup/setup.py
-
-# Make sure the pip entry points in /usr/bin are correct.
-RUN rm -f /usr/bin/pip3 && cp -av /usr/local/bin/pip3 /usr/bin/pip3 && /usr/bin/pip3 -V && \
-    rm -f /usr/bin/pip  && cp -av /usr/local/bin/pip  /usr/bin/pip  && /usr/bin/pip  -V
