@@ -1,4 +1,4 @@
-FROM quay.io/bedrock/ubuntu:jammy-20231211.1
+FROM quay.io/bedrock/ubuntu:jammy-20240227
 
 # Prevent automatic apt cache cleanup, as caching is desired when running integration tests.
 # Instead, when installing packages during container builds, explicit cache cleanup is required.
