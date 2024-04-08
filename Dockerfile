@@ -1,4 +1,4 @@
-FROM quay.io/bedrock/ubuntu:jammy-20240227
+FROM quay.io/bedrock/ubuntu:noble-20240530
 
 # Prevent automatic apt cache cleanup, as caching is desired when running integration tests.
 # Instead, when installing packages during container builds, explicit cache cleanup is required.
@@ -25,10 +25,8 @@ RUN apt-get update -y && \
     openssh-server \
     openssl \
     python-is-python3 \
-    python3.10-dev \
-    python3.10-venv \
-    python3.11-dev \
-    python3.11-venv \
+    python3.12-dev \
+    python3.12-venv \
     shellcheck \
     sudo \
     systemd-sysv \
@@ -51,15 +49,19 @@ RUN apt-get update -y && \
     python3.8-venv \
     python3.9-dev \
     python3.9-venv \
-    python3.12-dev \
-    python3.12-venv \
+    python3.10-dev \
+    python3.10-venv \
+    python3.11-dev \
+    python3.11-venv \
+    python3.13-dev \
+    python3.13-venv \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install PowerShell using a binary archive.
 # This allows pinning to a specific version, and also brings support for multiple architectures.
-RUN version="7.4.0" && \
+RUN version="7.4.2" && \
     major_version="$(echo ${version} | cut -f 1 -d .)" && \
     install_dir="/opt/microsoft/powershell/${major_version}" && \
     tmp_file="/tmp/powershell.tgz" && \
