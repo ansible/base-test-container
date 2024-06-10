@@ -54,9 +54,9 @@ class Pip:
     )
 
     _DEFAULT_PACKAGES = dict(
-        pip='23.1.2',
-        setuptools='67.7.2',
-        wheel='0.37.1',
+        pip='24.0',
+        setuptools='70.0.0',
+        wheel='0.43.0',
     )
 
     _PACKAGES: dict[str, dict[str, str]] = {
@@ -90,7 +90,7 @@ class Pip:
         packages = [f'{name}=={version}' for name, version in self.packages.items()]
 
         with self._install_options_context() as options:
-            subprocess.run(self._pip_command + options + list(self._OPTIONS) + packages, check=True, env=env)
+            subprocess.run(self._pip_command + options + list(self._OPTIONS) + ['--break-system-packages'] + packages, check=True, env=env)
 
     def show_version(self) -> None:
         """Show the pip version."""
@@ -108,7 +108,7 @@ class Pip:
     def install(self, args: t.List[str]) -> None:
         """Install Python packages."""
         with self._install_options_context() as options:
-            subprocess.run(self._pip_command + ['install'] + options + list(self._OPTIONS) + args, check=True)
+            subprocess.run(self._pip_command + ['install', '--break-system-packages'] + options + list(self._OPTIONS) + args, check=True)
 
     def list(self) -> t.List[t.Tuple[str, str]]:
         """Get a list of installed Python packages and versions."""
