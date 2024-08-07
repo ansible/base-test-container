@@ -54,9 +54,7 @@ class Pip:
     )
 
     _DEFAULT_PACKAGES = dict(
-        pip='24.0',
-        setuptools='70.0.0',
-        wheel='0.43.0',
+        pip='24.2',
     )
 
     _PACKAGES: dict[str, dict[str, str]] = {
@@ -89,8 +87,14 @@ class Pip:
 
         packages = [f'{name}=={version}' for name, version in self.packages.items()]
 
+        setup_options = [
+            '--break-system-packages',
+            '--no-setuptools',
+            '--no-wheel',
+        ]
+
         with self._install_options_context() as options:
-            subprocess.run(self._pip_command + options + list(self._OPTIONS) + ['--break-system-packages'] + packages, check=True, env=env)
+            subprocess.run(self._pip_command + options + list(self._OPTIONS) + setup_options + packages, check=True, env=env)
 
     def show_version(self) -> None:
         """Show the pip version."""
