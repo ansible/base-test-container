@@ -28,6 +28,7 @@ RUN apt-get update -y && \
     python3.12-dev \
     python3.12-venv \
     shellcheck \
+    sshpass \
     sudo \
     systemd-sysv \
     && \
