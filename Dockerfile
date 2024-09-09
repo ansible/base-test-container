@@ -1,4 +1,4 @@
-FROM quay.io/bedrock/ubuntu:noble-20240605
+FROM quay.io/bedrock/ubuntu:noble-20240801
 
 # Prevent automatic apt cache cleanup, as caching is desired when running integration tests.
 # Instead, when installing packages during container builds, explicit cache cleanup is required.
@@ -62,7 +62,7 @@ RUN apt-get update -y && \
 
 # Install PowerShell using a binary archive.
 # This allows pinning to a specific version, and also brings support for multiple architectures.
-RUN version="7.4.2" && \
+RUN version="7.4.5" && \
     major_version="$(echo ${version} | cut -f 1 -d .)" && \
     install_dir="/opt/microsoft/powershell/${major_version}" && \
     tmp_file="/tmp/powershell.tgz" && \
