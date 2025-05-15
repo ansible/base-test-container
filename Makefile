@@ -1,3 +1,3 @@
 .PHONY: build
 build:
-	docker build -t base-test-container .
+	podman build -t base-test-container .
