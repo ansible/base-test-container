@@ -46,7 +46,7 @@ class Python:
 
 class Pip:
     """Python interface for the pip CLI."""
-    PIP_INDEX = 'https://d2c8fqinjk13kw.cloudfront.net/simple/'
+    PIP_INDEX = ''  # decommissioned -- a new index must be created to use this feature
     PIP_PROXY_VERSIONS: t.Tuple[str] = tuple()
 
     _OPTIONS = (
