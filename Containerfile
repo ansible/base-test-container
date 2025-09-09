@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/ubuntu:noble-20250716
+FROM public.ecr.aws/docker/library/ubuntu:noble-20250805
 
 # Prevent automatic apt cache cleanup, as caching is desired when running integration tests.
 # Instead, when installing packages during container builds, explicit cache cleanup is required.
@@ -81,7 +81,6 @@ RUN version="7.5.2" && \
     ln -s "${install_dir}/pwsh" /usr/bin/pwsh && \
     pwsh --version
 
-ENV container=docker
 CMD ["/sbin/init"]
 
 # Install pip last to speed up local container rebuilds.
