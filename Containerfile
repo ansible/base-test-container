@@ -81,7 +81,6 @@ RUN version="7.5.2" && \
     ln -s "${install_dir}/pwsh" /usr/bin/pwsh && \
     pwsh --version
 
-ENV container=docker
 CMD ["/sbin/init"]
 
 # Install pip last to speed up local container rebuilds.
