@@ -76,7 +76,7 @@ class Pip:
 
     def download_get_pip(self) -> None:
         """Download the get_pip installer."""
-        with urllib.request.urlopen(f'https://ansible-ci-files.s3.amazonaws.com/ansible-test/get-pip-{self.version}.py') as download:
+        with urllib.request.urlopen(f'https://ci-files.testing.ansible.com/ansible-test/get-pip-{self.version}.py') as download:
             with open(self._get_pip_path, 'wb') as file:
                 shutil.copyfileobj(download, file)
 
