@@ -33,7 +33,7 @@ tar zxf "${tmp_file}" --no-same-owner --no-same-permissions -C "${install_dir}"
 rm "${tmp_file}"
 find "${install_dir}" -type f -exec chmod -x "{}" ";"
 chmod +x "${install_dir}/pwsh"
-ln -s "${install_dir}/pwsh" "/usr/bin/pwsh${major_version}.${minor_version}"
-ln -sf "${install_dir}/pwsh" /usr/bin/pwsh
+ln -s "${install_dir}/pwsh" "/usr/local/bin/pwsh${major_version}.${minor_version}"
+ln -sf "${install_dir}/pwsh" /usr/local/bin/pwsh
 pwsh --version
 rm -rf /tmp/.dotnet
