@@ -62,7 +62,7 @@ RUN apt-get update -y && \
 
 # Install PowerShell.
 COPY files/powershell.sh /usr/share/container-setup/
-RUN /usr/share/container-setup/powershell.sh 7.6.0-preview.6
+RUN /usr/share/container-setup/powershell.sh 7.6.0-rc.1
 
 CMD ["/sbin/init"]
 
