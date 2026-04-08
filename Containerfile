@@ -56,6 +56,8 @@ RUN apt-get update -y && \
     python3.13-venv \
     python3.14-dev \
     python3.14-venv \
+    python3.15-dev \
+    python3.15-venv \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
