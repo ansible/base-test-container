@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/ubuntu:noble-20260730.1
+FROM public.ecr.aws/docker/library/ubuntu:resolute-20260811.1
 
 # Prevent automatic apt cache cleanup, as caching is desired when running integration tests.
 # Instead, when installing packages during container builds, explicit cache cleanup is required.
@@ -14,6 +14,7 @@ RUN apt-get update -y && \
     gnupg2 \
     libbz2-dev \
     libffi-dev \
+    libicu78 \
     libreadline-dev \
     libsqlite3-dev \
     libxml2-dev \
@@ -25,8 +26,8 @@ RUN apt-get update -y && \
     openssh-server \
     openssl \
     python-is-python3 \
-    python3.12-dev \
-    python3.12-venv \
+    python3.14-dev \
+    python3.14-venv \
     shellcheck \
     sshpass \
     sudo \
@@ -52,10 +53,10 @@ RUN apt-get update -y && \
     python3.10-venv \
     python3.11-dev \
     python3.11-venv \
+    python3.12-dev \
+    python3.12-venv \
     python3.13-dev \
     python3.13-venv \
-    python3.14-dev \
-    python3.14-venv \
     python3.15-dev \
     python3.15-venv \
     && \
@@ -64,7 +65,7 @@ RUN apt-get update -y && \
 
 # Install PowerShell.
 COPY files/powershell.sh /usr/share/container-setup/
-RUN /usr/share/container-setup/powershell.sh 7.6.4
+RUN /usr/share/container-setup/powershell.sh 7.6.5
 
 CMD ["/sbin/init"]
 

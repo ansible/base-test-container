@@ -9,7 +9,7 @@ set -eu
 
 version="$1"
 
-arch="$(uname -i)"
+arch="$(uname -m)"
 
 if [ "${arch}" = "x86_64" ]; then
   arch="x64"
