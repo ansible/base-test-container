@@ -47,8 +47,6 @@ COPY files/deadsnakes.list /etc/apt/sources.list.d/deadsnakes.list
 # This is done separately to avoid conflicts with official Ubuntu packages.
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    python3.9-dev \
-    python3.9-venv \
     python3.10-dev \
     python3.10-venv \
     python3.11-dev \
