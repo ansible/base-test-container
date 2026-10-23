@@ -54,7 +54,7 @@ class Pip:
     )
 
     _DEFAULT_PACKAGES = dict(
-        pip='25.2',
+        pip='26.2.2',
     )
 
     _PACKAGES: dict[str, dict[str, str]] = {
