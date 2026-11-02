@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/ubuntu:resolute-20260927
+FROM public.ecr.aws/docker/library/ubuntu:resolute-20261024.1
 
 # Prevent automatic apt cache cleanup, as caching is desired when running integration tests.
 # Instead, when installing packages during container builds, explicit cache cleanup is required.
